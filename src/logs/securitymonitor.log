@@ -1,0 +1,37 @@
+[2025-11-10 18:13:13] Loading YOLO model...
+[2025-11-10 18:13:13] YOLO loaded on device: cpu
+[2025-11-10 18:13:13] [Front Cam] Starting camera worker.
+[2025-11-10 18:13:13] [Side Cam] Starting camera worker.
+[2025-11-10 18:13:13] [rtsp://user:pass@192.168.1.131/stream1] Opening RTSP stream: rtsp://user:pass@192.168.1.131/stream1
+[2025-11-10 18:13:13] [rtsp://user:pass@192.168.1.132/stream1] Opening RTSP stream: rtsp://user:pass@192.168.1.132/stream1
+[2025-11-10 18:13:13] [Front Cam] Stream opened successfully.
+[2025-11-10 18:13:13] [Side Cam] Stream opened successfully.
+[2025-11-10 18:13:39] [rtsp://user:pass@192.168.1.131/stream1] RTSP stream closed.
+[2025-11-10 18:13:39] [rtsp://user:pass@192.168.1.132/stream1] RTSP stream closed.
+[2025-11-10 18:13:39] [rtsp://user:pass@192.168.1.132/stream1] RTSP stream closed.
+[2025-11-10 18:13:39] [Side Cam] Camera worker stopped.
+[2025-11-10 18:13:40] [rtsp://user:pass@192.168.1.131/stream1] RTSP stream closed.
+[2025-11-10 18:13:40] [Front Cam] Camera worker stopped.
+[2025-11-10 18:14:13] 🚀 Starting SecurityMonitor...
+[2025-11-10 18:14:13] Loading YOLO model...
+[2025-11-10 18:14:13] YOLO loaded on device: cpu
+[2025-11-10 18:14:13] [Front Cam] Starting camera worker.
+[2025-11-10 18:14:13] [rtsp://user:pass@192.168.1.131/stream1] Opening RTSP stream: rtsp://user:pass@192.168.1.131/stream1
+[2025-11-10 18:14:13] [Side Cam] Starting camera worker.
+[2025-11-10 18:14:13] ✅ All camera workers started. Press Ctrl+C to stop.
+[2025-11-10 18:14:13] [rtsp://user:pass@192.168.1.132/stream1] Opening RTSP stream: rtsp://user:pass@192.168.1.132/stream1
+[2025-11-10 18:14:13] 💓 Heartbeat: 2/2 camera threads alive.
+[2025-11-10 18:14:13] [rtsp://user:pass@192.168.1.131/stream1] ❌ Failed to open RTSP stream.
+[2025-11-10 18:14:13] [Front Cam] Stream opened successfully.
+[2025-11-10 18:14:13] [rtsp://user:pass@192.168.1.132/stream1] ❌ Failed to open RTSP stream.
+[2025-11-10 18:14:13] [Side Cam] Stream opened successfully.
+[2025-11-10 18:15:13] 💓 Heartbeat: 2/2 camera threads alive.
+[2025-11-10 18:15:41] 🛑 Shutting down SecurityMonitor...
+[2025-11-10 18:15:41] [rtsp://user:pass@192.168.1.131/stream1] RTSP stream closed.
+[2025-11-10 18:15:41] [rtsp://user:pass@192.168.1.132/stream1] RTSP stream closed.
+[2025-11-10 18:15:41] [rtsp://user:pass@192.168.1.131/stream1] RTSP stream closed.
+[2025-11-10 18:15:41] [Front Cam] Camera worker stopped.
+[2025-11-10 18:15:41] [rtsp://user:pass@192.168.1.132/stream1] RTSP stream closed.
+[2025-11-10 18:15:41] [Side Cam] Camera worker stopped.
+[2025-11-10 18:15:41] ✅ All camera threads stopped cleanly.
+[2025-11-10 18:15:41] 👋 SecurityMonitor exited.
