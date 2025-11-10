@@ -1,32 +1,26 @@
 import os
-import sys
 import time
-import logging
+import sys
 from logging.handlers import RotatingFileHandler
+import logging
 
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
-LOG_FILE = os.path.join(LOG_DIR, "securitymonitor.log")
 
-# Force stdout to UTF-8 (prevents Windows emoji crash)
-if sys.stdout.encoding.lower() != "utf-8":
-    sys.stdout.reconfigure(encoding="utf-8")
+LOG_FILE = os.path.join(LOG_DIR, "securitymonitor.log")
 
 _logger = logging.getLogger("SecurityMonitor")
 _logger.setLevel(logging.INFO)
-
-handler = RotatingFileHandler(LOG_FILE, maxBytes=1_000_000, backupCount=5, encoding="utf-8")
+handler = RotatingFileHandler(LOG_FILE, maxBytes=1_000_000, backupCount=5)
 formatter = logging.Formatter("[%(asctime)s] %(message)s", "%Y-%m-%d %H:%M:%S")
 handler.setFormatter(formatter)
 _logger.addHandler(handler)
 
 def log(msg: str):
-    """Write to console and rotating file with UTF-8 safety."""
+    """Simple console logger, UTF-8 safe on Windows."""
+    timestamp = time.strftime("[%Y-%m-%d %H:%M:%S]")
     try:
-        print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {msg}")
+        print(f"{timestamp} {msg}", flush=True)
     except UnicodeEncodeError:
-        # fallback if console encoding fails
-        safe_msg = msg.encode("ascii", "replace").decode()
-        print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {safe_msg}")
-
-    _logger.info(msg)
+        safe_msg = msg.encode("utf-8", errors="replace").decode("utf-8", errors="ignore")
+        print(f"{timestamp} {safe_msg}", flush=True)
