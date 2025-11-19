@@ -5,11 +5,11 @@ from SecurityMonitor.utils import config, logger
 
 
 class YoloDetector:
-    def __init__(self, model_path="yolov8n.pt", conf_thresh=config.PERSON_CONFIDENCE):
+    def __init__(self, model_path="src/yolov8n.onnx", conf_thresh=config.PERSON_CONFIDENCE):
         logger.log("Loading YOLO model...")
         self.model = YOLO(model_path)
         self.conf_thresh = conf_thresh
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = 0 if torch.cuda.is_available() else "cpu"
         logger.log(f"YOLO loaded on device: {self.device}")
 
     def detect_person(self, frame):
