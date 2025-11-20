@@ -14,8 +14,19 @@ class CameraWorker(threading.Thread):
         self.rtsp_url = rtsp_url
         self.detector = detector
         self.trigger = TriggerHandler()
-        self.reader = VideoReader(rtsp_url, debug=config.DEBUG)
+        # Pass self.debug_inference as callback and self.name
+        self.reader = VideoReader(rtsp_url, debug=config.DEBUG, name=name, on_click=self.debug_inference)
         self.running = True
+
+    def debug_inference(self, frame):
+        logger.log(f"[{self.name}] 🖱️ Click detected! Running manual inference...")
+        try:
+            boxes = self.detector.detect_person(frame)
+            logger.log(f"[{self.name}] Manual Inference Result: {len(boxes)} people detected.")
+            for i, (box, conf) in enumerate(boxes):
+                 logger.log(f"   - Person {i+1}: Confidence {conf:.2f}, Box {box}")
+        except Exception as e:
+            logger.log(f"[{self.name}] Manual Inference Failed: {e}")
 
     def run(self):
         logger.log(f"[{self.name}] Starting camera worker.")

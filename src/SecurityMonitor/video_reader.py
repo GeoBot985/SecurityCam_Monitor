@@ -6,7 +6,7 @@ from SecurityMonitor.utils import config, logger
 class VideoReader:
     """Simple continuous RTSP reader with real-time freshness."""
 
-    def __init__(self, rtsp_url=None, debug=config.DEBUG, name=None):
+    def __init__(self, rtsp_url=None, debug=config.DEBUG, name=None, on_click=None):
         # if no specific URL is passed, use the first camera from config.RTSP_URLS
         if rtsp_url is None:
             try:
@@ -22,6 +22,13 @@ class VideoReader:
         self.last_time = 0.0
         self.fail_count = 0
         self.max_failures = 5
+        self.on_click = on_click
+        self.last_frame = None
+
+    def _mouse_callback(self, event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            if self.on_click and self.last_frame is not None:
+                self.on_click(self.last_frame)
 
     # -------------------------------------------------------------
     def open(self):
@@ -31,6 +38,12 @@ class VideoReader:
         if not self.cap.isOpened():
             logger.log(f"[{self.name}] ❌ Failed to open RTSP stream.")
             return False
+
+        if self.debug:
+             window_name = f"{self.name} (Debug)"
+             cv2.namedWindow(window_name)
+             cv2.setMouseCallback(window_name, self._mouse_callback)
+
         # burn a few frames to clear the decoder
         for _ in range(10):
             self.cap.grab()
@@ -50,6 +63,8 @@ class VideoReader:
                 logger.log(f"[{self.name}] ⚠️ Frame read failed repeatedly; attempting reopen.")
                 self.reconnect()
             return None
+
+        self.last_frame = frame
 
         self.fail_count = 0
         now = time.time()
@@ -80,5 +95,8 @@ class VideoReader:
         if self.cap:
             self.cap.release()
         if self.debug:
-            cv2.destroyAllWindows()
+            try:
+                cv2.destroyWindow(f"{self.name} (Debug)")
+            except Exception:
+                pass
         logger.log(f"[{self.name}] RTSP stream closed.")
